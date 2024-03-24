@@ -16,7 +16,7 @@
 \usepackage{netsplit-macros}
 % Set page warning and limits to 13 pages and 18 pages respectively
 % Page will be colored yellow after 13 and red after 18
-\SetMaxPageBackground{13}{18}
+\SetMaxPageBackground{4}{6}
 % Register macros for names (for notes)
 % e.g., the first line creates, with a teal-based color:
 % - \enrico{} for inline notes
@@ -106,6 +106,8 @@ The \B{macronames} command defines new macros with a specific name and color. I 
 
 The new commands/macros defined by \B{macronames} can't be used in the preamble.
 
+To see a list of all todo notes, you can use the \texttt{todonotes} command \B{listoftodos}. It has been enhanced so that it prints the list of notes in a new page, and it automatically fixes the TOC level (useful in templates such as \texttt{lncs}).
+
 \subsubsection{Examples}
 
 \begin{minted}{latex}
@@ -160,6 +162,26 @@ I defined the following colors:
     \foreach \n in {zyellow,zred,zgreen,zblue,zpurple,zmagenta,zorange,zgray}{\item \C{\n} \texttt{\n}}
 \end{itemize}
 
+
+\clearpage
+
+\noindent This page is colored yellow as I have set a limit of four pages using:
+\begin{minted}{latex}
+\SetMaxPageBackground{4}{6}
+\end{minted}
+
+\clearpage
+
+\noindent As the page before, this is yellow as it is over the warning threshold.
+
+\clearpage
+
+\noindent This page is colored red as I have set a limit of six pages using:
+\begin{minted}{latex}
+\SetMaxPageBackground{4}{6}
+\end{minted}
+
+\noindent Every page after this one will be red as well.
 
 \end{document}
 
