@@ -1,0 +1,118 @@
+\documentclass[a4paper]{article}
+\usepackage{minted}
+
+\title{\texttt{netsplit-macros} documentation}
+\author{enrico204}
+\date{\today}
+
+\newcommand\B[1]{\texttt{\textbackslash #1}}
+\newcommand\C[1]{\fcolorbox{black!50}{#1}{\rule{0pt}{4pt}\rule{4pt}{0pt}}}
+
+% Useful macros
+%\input{MACROS}
+\usepackage{netsplit-macros}
+% Set page warning and limits to 13 pages and 18 pages respectively
+% Page will be colored yellow after 13 and red after 18
+\SetMaxPageBackground{13}{18}
+% Register macros for names (for notes)
+% e.g., the first line creates, with a teal-based color:
+% - \enrico{} for inline notes
+% - \hlenrico{} for text highlight + non-inline notes
+% - both commands above with the star variation, for "done" notes
+% - todo: register changes color/authorship
+\macronames{enrico}{zgreen}
+\macronames{edoardo}{zblue}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+\texttt{netsplit-macros} is a package that helps writing (my) papers. It is an opinionated set of macros, functions, and settings that I use when writing papers alone or within a group.
+
+Most of these commands are shortcut for common packages, such as \texttt{todonotes} or \texttt{soul}.
+
+\section{Package options}
+
+\begin{itemize}
+    \item \texttt{largepage}: set the size of the page to 275.9mm x 279.4mm (larger than \texttt{letter}) to accomodate non-inline ``TODO notes''. Useful when writing paper in some IEEE double column templates.
+    \item \texttt{final}: disable all changes and commands (commands still exists, they are aliased to no-op functions).
+    \item \texttt{changebar}: loads the \texttt{changebar} environment (or a no-op when used with \texttt{final}). This is optional as some conference templates have issues with that.
+\end{itemize}
+
+\section{Macros/commands}
+
+\subsection{\B{SetMaxPageBackground}}
+
+The \B{SetMaxPageBackground} command enables a conditional background for pages. It is useful to visually mark pages that are beyond certain limits for the submission.
+
+It requires two arguments, one for a yellow warning, and one for the red warning. Pages after the first argument will be colored in yellow, while pages beyond the second argument will be colored in red. If both arguments are the same number, the yellow warning will be ignored.
+
+E.g., if your conference/journal requires 10 page max excluding references, and 12 page max including references, you can use the following:
+
+\begin{minted}{latex}
+\SetMaxPageBackground{10}{12}
+\end{minted}
+
+\subsection{\B{macronames}}
+
+The \B{macronames} command defines new macros with a specific name and color. I use this kind of macros for notes while writing/reviewing the paper, defining macros using author's names. The name is restricted to LaTeX command names, so I suggest to use a nickname.
+
+\begin{minted}{latex}
+\macronames{enrico}{zgreen}
+\end{minted}
+
+(in this example, I used a custom color defined in the package; however, you can use any standard color or custom defined color). This command:
+
+\begin{itemize}
+    \item creates a new command named \B{enrico} that you can use to show an ``inline note'' (colored in \texttt{teal}). The parameter is the note content/text.
+    \item creates a new command named \B{hlenrico}, which has two parameters: first, the note content/text, and second, the highlighted part. It creates a note (colored in \texttt{teal}) in the page margin, and draw a line from the note to the highlighted text.
+    \item creates also a ``star'' version of the two commands above (e.g., \B{enrico*}. These commands draw the note in gray with a line over the text (as if you mark the note as ``done'').
+    \item registers \texttt{enrico} as author in the \texttt{changes} package as author, associating the \texttt{teal} color to the author's changes.
+\end{itemize}
+
+\subsubsection{Examples}
+
+\enrico{this is an inline note}
+
+This is a text \hlenrico{this is a side note with highlighted text}{in the page}.
+
+\enrico*{this is an inline note added with the star command}
+
+\added[id=enrico]{This is a text added (from the \texttt{changes} package).}
+
+\edoardo{This is another author}
+
+
+\subsection{\texttt{locked} environment}
+
+Sometimes you want to ``mark'' a specific area of the paper, telling other authors that you don't want them to edit it. This is mostly useful when using an interactive/multi-user editor like Overleaf. The \texttt{locked} environment defines a section that is ``locked'' by a specific person by marking the area, so that other authors knows that they are not supposed to modify it.
+
+\subsubsection{Example}
+
+\begin{minted}{latex}
+This is a text in a paragraph. You are free to modify it.
+\begin{locked}{enrico}
+This section is reported as locked by one of the authors.
+\end{locked}
+\end{minted}
+
+This is a text in a paragraph. You are free to modify it.
+\begin{locked}{enrico}
+This section is reported as locked by one of the authors.
+\end{locked}
+
+
+\subsection{Custom colors}
+
+I defined the following colors:
+
+\begin{itemize}
+    \foreach \n in {zyellow,zred,zgreen,zblue,zpurple,zmagenta,zorange,zgray}{\item \C{\n} \texttt{\n}}
+\end{itemize}
+
+
+\end{document}
+

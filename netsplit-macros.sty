@@ -1,0 +1,171 @@
+%% pig.dtx
+%% Copyright 2024 Enrico Bassetti
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   https://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Enrico Bassetti.
+%
+% This work consists of this file.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{netsplit-macros}[2024/03/24 Netsplit useful macros collection]
+
+\newif\iffinal
+\finalfalse
+
+\newif\iflargepage
+\largepagefalse
+
+\newif\ifchangebar
+\changebarfalse
+
+% if FINAL is passed, disable all macros
+\DeclareOption{final}{\finaltrue}
+\DeclareOption{largepage}{\largepagetrue}
+\DeclareOption{changebar}{\changebartrue}
+\ProcessOptions\relax
+
+\RequirePackage{atbegshi}
+\RequirePackage[dvipsnames]{xcolor}
+
+% Predefined colors (for notes/changes):
+% black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, olive, orange, pink, purple, red, teal, violet, white, yellow.
+% Register some nice colors
+\definecolor{zyellow}{HTML}{FFEA80}
+\DeclareRobustCommand{\hlyellow}[1]{{\sethlcolor{zyellow}\hl{#1}}}
+
+\definecolor{zred}{HTML}{FFB3B3}
+\DeclareRobustCommand{\hlred}[1]{{\sethlcolor{zred}\hl{#1}}}
+
+\definecolor{zgreen}{HTML}{AFD99B}
+\DeclareRobustCommand{\hlgreen}[1]{{\sethlcolor{zgreen}\hl{#1}}}
+
+\definecolor{zblue}{HTML}{97D4F2}
+\DeclareRobustCommand{\hlblue}[1]{{\sethlcolor{zblue}\hl{#1}}}
+
+\definecolor{zpurple}{HTML}{D1C5F2}
+\DeclareRobustCommand{\hlpurple}[1]{{\sethlcolor{zpurple}\hl{#1}}}
+
+\definecolor{zmagenta}{HTML}{F2B7F7}
+\DeclareRobustCommand{\hlmagenta}[1]{{\sethlcolor{zmagenta}\hl{#1}}}
+
+\definecolor{zorange}{HTML}{F8CC9B}
+\DeclareRobustCommand{\hlorange}[1]{{\sethlcolor{zorange}\hl{#1}}}
+
+\definecolor{zgray}{HTML}{D5D5D5}
+\DeclareRobustCommand{\hlgray}[1]{{\sethlcolor{zgray}\hl{#1}}}
+
+% \SetMaxPageBackground creates two page thresholds: yellow and red.
+% To create one threshold only, set both to the same value.
+\iffinal \NewDocumentCommand\SetMaxPageBackground{mm}{} \else
+\NewDocumentCommand\SetMaxPageBackground{mm}{
+    \definecolor{lightorange}{rgb}{1,0.94,0.88}
+    \definecolor{lightred}{rgb}{0.86,0.64,0.65}
+    \newcounter{maxpagelengthcounter}
+    \setcounter{maxpagelengthcounter}{1}
+    \AddToHook{shipout/background}{
+      \stepcounter{maxpagelengthcounter}
+      \ifnum\value{maxpagelengthcounter}>#1
+        \AtBeginShipoutNext{\pagecolor{lightorange}}
+      \fi
+      \ifnum\value{maxpagelengthcounter}>#2
+        \AtBeginShipoutNext{\pagecolor{lightred}}
+      \fi
+    }
+}
+\fi
+
+% Red lateral change bar - note: may not work in some templates (e.g., IEEE)
+\ifchangebar
+\iffinal
+    \newenvironment{changebar}{}{}
+\else
+    \RequirePackage[color]{changebar}
+    \cbcolor[rgb]{1 0 0}
+\fi
+\fi
+
+% Yellow highlight
+\iffinal \NewDocumentCommand\hl{m}{} \else
+\RequirePackage{soul}
+\soulregister\cite7
+\soulregister\ref7
+\soulregister\pageref7
+% Use \hl when available
+\ifundef{\hl}{
+\newcommand{\hl}{\highlight}
+}{}
+\fi
+
+% temporarly increase page sizes for notes, regular letter size is 215.9 wide by 279.44 long
+\iffinal \else
+    \iflargepage
+        \RequirePackage[paperwidth=275.9mm, paperheight=279.4mm]{geometry}
+        \setlength{\marginparwidth}{3cm}
+    \fi
+\fi
+
+% "todo" notes
+% this creates the command with the names using \macronames
+\iffinal
+\NewDocumentCommand\macronames{mm}{
+    \expandafter\NewDocumentCommand\csname#1\endcsname{sm}{}
+    \expandafter\NewDocumentCommand\csname hl#1\endcsname{smm}{##3}
+}
+\else
+\RequirePackage{ifthen}
+\RequirePackage{todonotes}
+\RequirePackage[normalem]{ulem}
+\def\set#1#2{\expandafter\gdef\csname localdata@#1\endcsname{#2}}
+\def\get#1{\csname localdata@#1\endcsname}
+\NewDocumentCommand\macronames{mm}{
+    \expandafter\NewDocumentCommand\csname#1\endcsname{sm}{
+        \IfBooleanTF##1
+        {
+            \todo[color=gray!60,inline]{{\bf #1:} \sout{##2}}
+        }{
+            \todo[color=#2!60,inline]{{\bf #1:} ##2}
+        }
+    }
+    \expandafter\NewDocumentCommand\csname hl#1\endcsname{smm}{
+        \IfBooleanTF##1
+        {
+            \sethlcolor{gray}\texthl{##3}\todo[color=gray!60]{{\bf #1:} \sout{##2}}
+        }{
+            \sethlcolor{#2}\texthl{##3}\todo[color=#2!60]{{\bf #1:} ##2}
+        }
+    }
+    \definechangesauthor[color=#2,name=#1]{#1}
+    \set{#1}{#2}
+}
+\fi
+
+% Changes package - for \added, \replaced, \deleted
+\iffinal
+    % Todo: redefine alias so that we can avoid loading the changes package
+    \RequirePackage[commandnameprefix=ifneeded,final]{changes}
+\else
+    \RequirePackage[commandnameprefix=ifneeded,defaultcolor=yellow]{changes}
+\fi
+
+% Locked environment
+\iffinal
+    \newenvironment{locked}[1]{}{}
+\else
+    \RequirePackage{tcolorbox}
+    \RequirePackage{environ}
+    \NewEnviron{locked}[1]{%
+        \tcbset{colback=\get{#1}!50!white,size=minimal,oversize}
+        \tcbsetforeverylayer{colframe=\get{#1}!75!black}
+        \begin{tcolorbox}[title=Section locked by #1]\BODY\end{tcolorbox}
+    }
+\fi
+
