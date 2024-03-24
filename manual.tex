@@ -1,6 +1,9 @@
 \documentclass[a4paper]{article}
 \usepackage{minted}
 
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={netsplit-macros documentation},pdfauthor={enrico204}}
+
 \title{\texttt{netsplit-macros} documentation}
 \author{enrico204}
 \date{\today}
@@ -48,13 +51,27 @@ Then, you can use any command described below. If you need to use an option, use
 \usepackage[final]{netsplit-macros}
 \end{minted}
 
+
 \section{Package options}
+\label{sec:options}
 
 \begin{itemize}
     \item \texttt{largepage}: set the size of the page to 275.9mm x 279.4mm (larger than \texttt{letter}) to accomodate non-inline ``TODO notes''. Useful when writing paper in some IEEE double column templates.
+    \item \texttt{nolargepage}: force disable the \texttt{largepage} automation (see~\autoref{sec:automation}).
     \item \texttt{final}: disable all changes and commands (commands still exists, they are aliased to no-op functions).
     \item \texttt{changebar}: loads the \texttt{changebar} environment (or a no-op when used with \texttt{final}). This is optional as some conference templates have issues with that.
 \end{itemize}
+
+
+\section{Automation}
+\label{sec:automation}
+
+This package, when loaded, applies automatically some changes to the paper, \textbf{except when the \texttt{final} option is used} (in that case, nothing is applied):
+
+\begin{itemize}
+	\item if the document class \texttt{IEEEtran} is detected, the \texttt{largepage} option is automatically used (see options in~\autoref{sec:options}).
+\end{itemize}
+
 
 \section{Macros/commands}
 

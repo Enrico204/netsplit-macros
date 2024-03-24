@@ -27,9 +27,16 @@
 \newif\ifchangebar
 \changebarfalse
 
+\makeatletter%
+\@ifclassloaded{IEEEtran}%
+  {\largepagetrue}%
+  {\largepagefalse}%
+\makeatother%
+
 % if FINAL is passed, disable all macros
 \DeclareOption{final}{\finaltrue}
 \DeclareOption{largepage}{\largepagetrue}
+\DeclareOption{nolargepage}{\largepagefalse}
 \DeclareOption{changebar}{\changebartrue}
 \ProcessOptions\relax
 
