@@ -34,6 +34,20 @@
 
 Most of these commands are shortcut for common packages, such as \texttt{todonotes} or \texttt{soul}.
 
+\section{How to use in your project}
+
+Copy the \texttt{netsplit-macros.sty} file in your project, and use the package in your main \LaTeX file (before \texttt{\textbackslash begin\{document\}}.
+
+\begin{minted}{latex}
+\usepackage{netsplit-macros}
+\end{minted}
+
+Then, you can use any command described below. If you need to use an option, use the square brackets:
+
+\begin{minted}{latex}
+\usepackage[final]{netsplit-macros}
+\end{minted}
+
 \section{Package options}
 
 \begin{itemize}
@@ -46,7 +60,7 @@ Most of these commands are shortcut for common packages, such as \texttt{todonot
 
 \subsection{\B{SetMaxPageBackground}}
 
-The \B{SetMaxPageBackground} command enables a conditional background for pages. It is useful to visually mark pages that are beyond certain limits for the submission.
+The \B{SetMaxPageBackground} command enables a conditional background for pages. It is useful to visually mark pages that are beyond certain limits for the submission. \textbf{This command goes in the \textit{preamble} (before the \textbackslash begin\{document\}}).
 
 It requires two arguments, one for a yellow warning, and one for the red warning. Pages after the first argument will be colored in yellow, while pages beyond the second argument will be colored in red. If both arguments are the same number, the yellow warning will be ignored.
 
@@ -58,7 +72,7 @@ E.g., if your conference/journal requires 10 page max excluding references, and 
 
 \subsection{\B{macronames}}
 
-The \B{macronames} command defines new macros with a specific name and color. I use this kind of macros for notes while writing/reviewing the paper, defining macros using author's names. The name is restricted to LaTeX command names, so I suggest to use a nickname.
+The \B{macronames} command defines new macros with a specific name and color. I use this kind of macros for notes while writing/reviewing the paper, defining macros using author's names. The name is restricted to LaTeX command names, so I suggest to use a nickname. \textbf{This command goes in the \textit{preamble} (before the \textbackslash begin\{document\}}).
 
 \begin{minted}{latex}
 \macronames{enrico}{zgreen}
@@ -73,7 +87,23 @@ The \B{macronames} command defines new macros with a specific name and color. I 
     \item registers \texttt{enrico} as author in the \texttt{changes} package as author, associating the \texttt{teal} color to the author's changes.
 \end{itemize}
 
+The new commands/macros defined by \B{macronames} can't be used in the preamble.
+
 \subsubsection{Examples}
+
+\begin{minted}{latex}
+
+\enrico{this is an inline note}
+
+This is a text \hlenrico{this is a side note with highlighted text}{in the page}.
+
+\enrico*{this is an inline note added with the star command}
+
+\added[id=enrico]{This is a text added (from the \texttt{changes} package).}
+
+\edoardo{This is another author}
+
+\end{minted}
 
 \enrico{this is an inline note}
 
