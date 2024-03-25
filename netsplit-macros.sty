@@ -130,24 +130,37 @@
 \RequirePackage{ifthen}
 \RequirePackage{todonotes}
 \RequirePackage[normalem]{ulem}
+\RequirePackage{marginnote}
+% Save colors in a map for later
 \def\set#1#2{\expandafter\gdef\csname localdata@#1\endcsname{#2}}
 \def\get#1{\csname localdata@#1\endcsname}
+% Work around todonotes in floats
+\let\oldmarginpar\marginpar
+\makeatletter
+\def\prepareIfItIsInFloat{\ifnum\@floatpenalty<0\relax \let\marginpar\marginnote \fi}
+\def\cleanupIfItIsInFloat{\ifnum\@floatpenalty<0\relax \let\marginpar\oldmarginpar \fi}
+\makeatother
+% define macro for defining new commands
 \NewDocumentCommand\macronames{mm}{
     \expandafter\NewDocumentCommand\csname#1\endcsname{sm}{
+        \prepareIfItIsInFloat
         \IfBooleanTF##1
         {
             \todo[color=gray!60,inline]{{\bf #1:} \sout{##2}}
         }{
             \todo[color=#2!60,inline]{{\bf #1:} ##2}
         }
+        \cleanupIfItIsInFloat
     }
     \expandafter\NewDocumentCommand\csname hl#1\endcsname{smm}{
+        \prepareIfItIsInFloat
         \IfBooleanTF##1
         {
             \sethlcolor{gray}\texthl{##3}\todo[color=gray!60]{{\bf #1:} \sout{##2}}
         }{
             \sethlcolor{#2}\texthl{##3}\todo[color=#2!60]{{\bf #1:} ##2}
         }
+        \cleanupIfItIsInFloat
     }
     \definechangesauthor[color=#2,name=#1]{#1}
     \set{#1}{#2}
