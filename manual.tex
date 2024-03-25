@@ -57,7 +57,7 @@ Then, you can use any command described below. If you need to use an option, use
 \label{sec:options}
 
 \begin{itemize}
-    \item \texttt{largepage}: set the size of the page to 275.9mm x 279.4mm (larger than \texttt{letter}) to accomodate non-inline ``TODO notes''. Useful when writing paper in some IEEE double column templates.
+    \item \texttt{largepage}: set the size of the page to 275.9mm x 279.4mm (larger than \texttt{letter}) to accomodate non-inline ``TODO notes''. Useful when writing paper in some IEEE double column templates. This is automatically applied in some templates (see~\autoref{sec:automation}).
     \item \texttt{nolargepage}: force disable the \texttt{largepage} automation (see~\autoref{sec:automation}).
     \item \texttt{final}: disable all changes and commands (commands still exists, they are aliased to no-op functions).
     \item \texttt{changebar}: loads the \texttt{changebar} environment (or a no-op when used with \texttt{final}). This is optional as some conference templates have issues with that.
@@ -88,9 +88,11 @@ E.g., if your conference/journal requires 10 page max excluding references, and 
 \SetMaxPageBackground{10}{12}
 \end{minted}
 
+You can see an example at the end of this manual.
+
 \subsection{\B{macronames}}
 
-The \B{macronames} command defines new macros with a specific name and color. I use this kind of macros for notes while writing/reviewing the paper, defining macros using author's names. The name is restricted to LaTeX command names, so I suggest to use a nickname. \textbf{This command goes in the \textit{preamble} (before the \textbackslash begin\{document\}}).
+The \B{macronames} command defines new macros with a specific name and color. I use this kind of macros for notes while writing/reviewing the paper, defining macros using author's names. The name is restricted to LaTeX command names, so I suggest to use a nickname. \textbf{This command goes in the \textit{preamble} \\(before the \textbackslash begin\{document\}}).
 
 \begin{minted}{latex}
 \macronames{enrico}{zgreen}
@@ -99,10 +101,10 @@ The \B{macronames} command defines new macros with a specific name and color. I 
 (in this example, I used a custom color defined in the package; however, you can use any standard color or custom defined color). This command:
 
 \begin{itemize}
-    \item creates a new command named \B{enrico} that you can use to show an ``inline note'' (colored in \texttt{teal}). The parameter is the note content/text.
-    \item creates a new command named \B{hlenrico}, which has two parameters: first, the note content/text, and second, the highlighted part. It creates a note (colored in \texttt{teal}) in the page margin, and draw a line from the note to the highlighted text.
+    \item creates a new command named \B{enrico} that you can use to show an ``inline note'' (colored in \texttt{zgreen}). The parameter is the note content/text.
+    \item creates a new command named \B{hlenrico}, which has two parameters: first, the note content/text, and second, the highlighted part. It creates a note (colored in \texttt{zgreen}) in the page margin, and draw a line from the note to the highlighted text.
     \item creates also a ``star'' version of the two commands above (e.g., \B{enrico*}. These commands draw the note in gray with a line over the text (as if you mark the note as ``done'').
-    \item registers \texttt{enrico} as author in the \texttt{changes} package as author, associating the \texttt{teal} color to the author's changes.
+    \item registers \texttt{enrico} as author in the \texttt{changes} package as author, associating the \texttt{zgreen} color to the author's changes.
 \end{itemize}
 
 The new commands/macros defined by \B{macronames} can't be used in the preamble.
@@ -164,10 +166,10 @@ This section is reported as locked by one of the authors.
 
 \subsection{Custom colors}
 
-I defined the following colors:
+I defined the following colors and \B{hl} aliases:
 
 \begin{itemize}
-    \foreach \n in {zyellow,zred,zgreen,zblue,zpurple,zmagenta,zorange,zgray}{\item \C{\n} \texttt{\n}}
+    \foreach \n in {yellow,red,green,blue,purple,magenta,orange,gray}{\item \C{z\n} \texttt{z\n} (highlight with \B{hl\n}\{\})}
 \end{itemize}
 
 
