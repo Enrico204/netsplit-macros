@@ -146,9 +146,9 @@
         \prepareIfItIsInFloat
         \IfBooleanTF##1
         {
-            \todo[color=gray!60,inline]{{\bf #1:} \sout{##2}}
+            \todo[color=gray!60,inline]{\textnormal{{\bf #1:} \sout{##2}}}
         }{
-            \todo[color=#2!60,inline]{{\bf #1:} ##2}
+            \todo[color=#2!60,inline]{\textnormal{{\bf #1:} ##2}}
         }
         \cleanupIfItIsInFloat
     }
@@ -156,9 +156,9 @@
         \prepareIfItIsInFloat
         \IfBooleanTF##1
         {
-            \sethlcolor{gray}\texthl{##3}\todo[color=gray!60]{{\bf #1:} \sout{##2}}
+            \sethlcolor{gray}\texthl{##3}\todo[color=gray!60]{\textnormal{{\bf #1:} \sout{##2}}}
         }{
-            \sethlcolor{#2}\texthl{##3}\todo[color=#2!60]{{\bf #1:} ##2}
+            \sethlcolor{#2}\texthl{##3}\todo[color=#2!60]{\textnormal{{\bf #1:} ##2}}
         }
         \cleanupIfItIsInFloat
     }
