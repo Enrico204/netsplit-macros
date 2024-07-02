@@ -47,28 +47,28 @@
 % black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, olive, orange, pink, purple, red, teal, violet, white, yellow.
 % Register some nice colors
 \definecolor{zyellow}{HTML}{FFEA80}
-\DeclareRobustCommand{\hlyellow}[1]{{\sethlcolor{zyellow}\hl{#1}}}
+\DeclareRobustCommand{\hlyellow}[1]{{\sethlcolor{zyellow}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zred}{HTML}{FFB3B3}
-\DeclareRobustCommand{\hlred}[1]{{\sethlcolor{zred}\hl{#1}}}
+\DeclareRobustCommand{\hlred}[1]{{\sethlcolor{zred}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zgreen}{HTML}{AFD99B}
-\DeclareRobustCommand{\hlgreen}[1]{{\sethlcolor{zgreen}\hl{#1}}}
+\DeclareRobustCommand{\hlgreen}[1]{{\sethlcolor{zgreen}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zblue}{HTML}{97D4F2}
-\DeclareRobustCommand{\hlblue}[1]{{\sethlcolor{zblue}\hl{#1}}}
+\DeclareRobustCommand{\hlblue}[1]{{\sethlcolor{zblue}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zpurple}{HTML}{D1C5F2}
-\DeclareRobustCommand{\hlpurple}[1]{{\sethlcolor{zpurple}\hl{#1}}}
+\DeclareRobustCommand{\hlpurple}[1]{{\sethlcolor{zpurple}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zmagenta}{HTML}{F2B7F7}
-\DeclareRobustCommand{\hlmagenta}[1]{{\sethlcolor{zmagenta}\hl{#1}}}
+\DeclareRobustCommand{\hlmagenta}[1]{{\sethlcolor{zmagenta}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zorange}{HTML}{F8CC9B}
-\DeclareRobustCommand{\hlorange}[1]{{\sethlcolor{zorange}\hl{#1}}}
+\DeclareRobustCommand{\hlorange}[1]{{\sethlcolor{zorange}\hl{#1}\sethlcolor{yellow}}}
 
 \definecolor{zgray}{HTML}{D5D5D5}
-\DeclareRobustCommand{\hlgray}[1]{{\sethlcolor{zgray}\hl{#1}}}
+\DeclareRobustCommand{\hlgray}[1]{{\sethlcolor{zgray}\hl{#1}\sethlcolor{yellow}}}
 
 % \SetMaxPageBackground creates two page thresholds: yellow and red.
 % To create one threshold only, set both to the same value.
@@ -157,9 +157,9 @@
         \prepareIfItIsInFloat
         \IfBooleanTF##1
         {
-            \sethlcolor{gray!20}\texthl{##3}\todo[color=gray!60]{\textnormal{{\bf #1:} \sout{##2}}}
+            \sethlcolor{gray!20}\texthl{##3}\sethlcolor{yellow}\todo[color=gray!60]{\textnormal{{\bf #1:} \sout{##2}}}
         }{
-            \sethlcolor{#2}\texthl{##3}\todo[color=#2!60]{\textnormal{{\bf #1:} ##2}}
+            \sethlcolor{#2}\texthl{##3}\sethlcolor{yellow}\todo[color=#2!60]{\textnormal{{\bf #1:} ##2}}
         }
         \cleanupIfItIsInFloat
     }
