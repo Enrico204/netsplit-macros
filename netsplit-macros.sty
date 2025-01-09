@@ -31,6 +31,9 @@
 \@ifclassloaded{IEEEtran}%
   {\largepagetrue}%
   {\largepagefalse}%
+\@ifpackageloaded{usenix-2020-09}%
+  {\largepagetrue}%
+  {\largepagefalse}%
 \makeatother%
 
 % if FINAL is passed, disable all macros
@@ -41,7 +44,8 @@
 \ProcessOptions\relax
 
 \RequirePackage{atbegshi}
-\RequirePackage[dvipsnames]{xcolor}
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\RequirePackage{xcolor}
 
 % Predefined colors (for notes/changes):
 % black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, olive, orange, pink, purple, red, teal, violet, white, yellow.
@@ -117,6 +121,12 @@
     \iflargepage
         \RequirePackage[paperwidth=275.9mm, paperheight=279.4mm]{geometry}
         \setlength{\marginparwidth}{3cm}
+
+        \AddToHook{shipout/foreground}{
+            \begin{tikzpicture}[overlay, remember picture]
+                \node[fill=yellow, draw, text=red, rotate=0, scale=1] at (current page.north) [anchor=north] {The additional border to pages has been added for notes by the netsplit-macros package};
+            \end{tikzpicture}
+        }
     \fi
 \fi
 
