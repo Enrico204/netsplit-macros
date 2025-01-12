@@ -83,7 +83,22 @@
     \newcounter{maxpagelengthcounter}
     \setcounter{maxpagelengthcounter}{1}
     \AddToHook{shipout/background}{
+
+      % Set page limit warnings
+      \ifnum\value{maxpagelengthcounter}>#2
+         \begin{tikzpicture}[overlay, remember picture]
+           \node[fill=red, draw, text=white, rotate=0, scale=1] at (current page.north) [anchor=north] {Outside page limit!};
+        \end{tikzpicture}
+      \else
+      \ifnum\value{maxpagelengthcounter}>#1
+        \begin{tikzpicture}[overlay, remember picture]
+          \node[fill=orange, draw, text=blue, rotate=0, scale=1] at (current page.north) [anchor=north] {Only references/appendices here!};
+        \end{tikzpicture}
+      \fi
+      \fi
+
       \stepcounter{maxpagelengthcounter}
+      % Set page background colors (after incrementing the counter)
       \ifnum\value{maxpagelengthcounter}>#1
         \AtBeginShipoutNext{\pagecolor{lightorange}}
       \fi
@@ -124,7 +139,7 @@
 
         \AddToHook{shipout/foreground}{
             \begin{tikzpicture}[overlay, remember picture]
-                \node[fill=yellow, draw, text=red, rotate=0, scale=1] at (current page.north) [anchor=north] {The additional border to pages has been added for notes by the netsplit-macros package};
+                \node[fill=yellow, draw, text=red, rotate=0, scale=1, align=center] at (current page.north west) [anchor=north west] {Additional margin to pages added\\by netsplit-macros package for notes};
             \end{tikzpicture}
         }
     \fi
