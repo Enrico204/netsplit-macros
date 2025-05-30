@@ -59,7 +59,7 @@ Then, you can use any command described below. If you need to use an option, use
 \begin{itemize}
     \item \texttt{largepage}: set the size of the page to 275.9mm x 279.4mm (larger than \texttt{letter}) to accomodate non-inline ``TODO notes''. Useful when writing paper in some IEEE double column templates. This is automatically applied in some templates (see~\autoref{sec:automation}).
     \item \texttt{nolargepage}: force disable the \texttt{largepage} automation (see~\autoref{sec:automation}).
-    \item \texttt{final}: disable all changes and commands (commands still exists, they are aliased to no-op functions).
+    \item \texttt{final}: disable all changes and commands (commands still exists, they are aliased to no-op functions). The \texttt{final} is also passed to the \texttt{changes} package.
     \item \texttt{changebar}: loads the \texttt{changebar} environment (or a no-op when used with \texttt{final}). This is optional as some conference templates have issues with that.
 \end{itemize}
 
@@ -104,7 +104,7 @@ The \B{macronames} command defines new macros with a specific name and color. I 
     \item creates a new command named \B{enrico} that you can use to show an ``inline note'' (colored in \texttt{zgreen}). The parameter is the note content/text.
     \item creates a new command named \B{hlenrico}, which has two parameters: first, the note content/text, and second, the highlighted part. It creates a note (colored in \texttt{zgreen}) in the page margin, and draw a line from the note to the highlighted text.
     \item creates also a ``star'' version of the two commands above (e.g., \B{enrico*}. These commands draw the note in gray with a line over the text (as if you mark the note as ``done'').
-    \item registers \texttt{enrico} as author in the \texttt{changes} package as author, associating the \texttt{zgreen} color to the author's changes.
+    \item registers \texttt{enrico} as author in the \texttt{changes} package as author, associating the \texttt{zgreen} color to the author's changes (mixed 60\% with red to highlight the change in the text).
 \end{itemize}
 
 The new commands/macros defined by \B{macronames} can't be used in the preamble.
@@ -121,7 +121,9 @@ This is a text \hlenrico{this is a side note with highlighted text}{in the page}
 
 \enrico*{this is an inline note added with the star command}
 
-\added[id=enrico]{This is a text added (from the \texttt{changes} package).}
+Using the \texttt{changes} package: \added[id=enrico]{This is added text.}
+\deleted[id=enrico]{This is deleted text.}
+\replaced[id=enrico]{This is a replaced text.}{This is the original text.}
 
 \edoardo{This is another author}
 
@@ -133,7 +135,9 @@ This is a text \hlenrico{this is a side note with highlighted text}{in the page}
 
 \enrico*{this is an inline note added with the star command}
 
-\added[id=enrico]{This is a text added (from the \texttt{changes} package).}
+Using the \texttt{changes} package: \added[id=enrico]{This is added text.}
+\deleted[id=enrico]{This is deleted text.}
+\replaced[id=enrico]{This is a replaced text.}{This is the original text.}
 
 \edoardo{This is another author}
 
@@ -148,6 +152,8 @@ This is a text \hlenrico{this is a side note with highlighted text}{in the page}
 \subsection{\texttt{locked} environment}
 
 Sometimes you want to ``mark'' a specific area of the paper, telling other authors that you don't want them to edit it. This is mostly useful when using an interactive/multi-user editor like Overleaf. The \texttt{locked} environment defines a section that is ``locked'' by a specific person by marking the area, so that other authors knows that they are not supposed to modify it.
+
+\paragraph{Note} This is an advisory lock. Anyone can still modify the section.
 
 \subsubsection{Example}
 

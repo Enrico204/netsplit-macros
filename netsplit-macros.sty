@@ -7,7 +7,7 @@
 %   https://www.latex-project.org/lppl.txt
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2008 or later.
-%
+% 
 % This work has the LPPL maintenance status `maintained'.
 % 
 % The Current Maintainer of this work is Enrico Bassetti.
@@ -131,7 +131,8 @@
 \iffinal
     \newenvironment{changebar}{}{}
 \else
-    \RequirePackage[color]{changebar}
+    \RequirePackage{luatex85}
+    \usepackage[pdftex,color]{changebar}
     \cbcolor[rgb]{1 0 0}
 \fi
 \fi
@@ -205,7 +206,7 @@
         }
         \cleanupIfItIsInFloat
     }
-    \definechangesauthor[color=#2,name=#1]{#1}
+    \definechangesauthor[color=#2!60!red,name=#1]{#1}
     \set{#1}{#2}
 }
 \fi
