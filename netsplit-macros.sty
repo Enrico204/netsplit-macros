@@ -152,9 +152,42 @@
 % temporarly increase page sizes for notes, regular letter size is 215.9 wide by 279.44 long
 \iffinal \else
     \iflargepage
-        \RequirePackage[paperwidth=275.9mm, paperheight=279.4mm]{geometry}
-        \setlength{\marginparwidth}{3cm}
+        \RequirePackage{geometry}
 
+        % Workaround for ACM templates
+        \makeatletter
+        \@ifclassloaded{acmart}{%
+            % acmart is loaded
+            \@ifclasswith{acmart}{sigconf}{%
+                % acmart with sigconf
+                \geometry{
+                    paperwidth=275.9mm,
+                    paperheight=279.4mm,
+                    layoutwidth=8.5in,
+                    layoutheight=11in,
+                    layouthoffset=30mm,
+                    layoutvoffset=0pt,
+                }%
+                \setlength{\marginparwidth}{4cm}
+            }{%
+                % acmart no sigconf, not supported yet
+                \geometry{
+                    paperwidth=275.9mm,
+                    paperheight=279.4mm,
+                    layoutwidth=8.5in,
+                    layoutheight=11in,
+                    layouthoffset=30mm,
+                    layoutvoffset=0pt,
+                }%
+                \setlength{\marginparwidth}{4cm}
+            }%
+        }{%
+            % acmart not loaded
+            \geometry{paperwidth=275.9mm, paperheight=279.4mm}
+            \setlength{\marginparwidth}{3cm}
+        }
+        \makeatother
+        
         \AddToHook{shipout/foreground}{
             \begin{tikzpicture}[overlay, remember picture]
                 \node[fill=yellow, draw, text=red, rotate=0, scale=1, align=center, hyperlink node=https://github.com/Enrico204/netsplit-macros] at (current page.north west) [anchor=north west] {Additional margin to pages added\\by netsplit-macros package for notes};
